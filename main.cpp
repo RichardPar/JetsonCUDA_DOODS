@@ -79,7 +79,7 @@ void unlockInstance(int inst)
 struct HelloHandler : public Http::Handler {
   HTTP_PROTOTYPE(HelloHandler)
   void onRequest(const Http::Request& req, Http::ResponseWriter writer) override{
-  int ni = lockInstance();
+  int ni = 0;
 
   if (req.resource() == "/version") {
             if (req.method() == Http::Method::Get) {
@@ -138,6 +138,9 @@ struct HelloHandler : public Http::Handler {
 
   if (req.resource() == "/detect") {
       if (req.method() == Http::Method::Post) {
+          ni = lockInstance();
+
+
           uint64_t start1 = CurrentTime_milliseconds();
           Document document;
 	  StringBuffer s;
@@ -174,12 +177,11 @@ struct HelloHandler : public Http::Handler {
           end = CurrentTime_milliseconds();
           //cout << "Base64Decode took " << (end - basedec) << "mSec" << endl;
 
-          char name[30];
-          tmpnam(name);
-          //cout << "File used is " << name << endl;
-          FILE* file = fopen(name, "wb");
-          fwrite(&decodedData[0], 1, decodedData.size(), file);
-          fclose(file);
+	  char name[] = "/tmp/JETSONXXXXXX";
+          int fd;
+          fd = mkstemp(name);
+          write(fd,&decodedData[0],decodedData.size());
+          close(fd);
           decodedData.clear();
 
           //ni = lockInstance();
@@ -194,10 +196,10 @@ struct HelloHandler : public Http::Handler {
             // CLEAN UP THINGS!!!!!   
             writer.send(Http::Code::Ok,"ERROR\r\n");
             unlockInstance(ni);
-            remove(name);
+            unlink(name);
             return;
            }
-         remove(name);
+         unlink(name);
 
 	 detectNet::Detection* detections = NULL;
          const int numDetections = net[ni]->Detect(imgPtr, imgWidth, imgHeight, &detections, 0);
@@ -245,15 +247,14 @@ struct HelloHandler : public Http::Handler {
         jsonwriter.EndArray();
         jsonwriter.EndObject();
 	cudaFreeHost(imgPtr);
-        //unlockInstance(ni);
 	writer.send(Http::Code::Ok,s.GetString());
-        
+        unlockInstance(ni);
         end = CurrentTime_milliseconds();
         cout << "Completed in " << (end - start1) << "mSeconds" << endl;
         //mtx.unlock();
       }
    } // End of DETECT
-    unlockInstance(ni);
+   // unlockInstance(ni);
 
   }
 };
