@@ -180,6 +180,13 @@ struct HelloHandler : public Http::Handler {
 	  char name[] = "/tmp/JETSONXXXXXX";
           int fd;
           fd = mkstemp(name);
+          if (fd == -1) 
+            {
+               writer.send(Http::Code::Ok,"ERROR\r\n");
+               unlockInstance(ni);
+               return;
+            }
+
           write(fd,&decodedData[0],decodedData.size());
           close(fd);
           decodedData.clear();
