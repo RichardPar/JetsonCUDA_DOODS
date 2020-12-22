@@ -22,6 +22,16 @@ GET
 POST
   /detect
 
+# To Build
+Git Clone/Unpack....<br>
+cd <where you downloaded><br>
+mkdir build<br>
+cd build<br>
+  cmake ../<br>
+  make<br>
+  
+
+
 
 To TEST
 
