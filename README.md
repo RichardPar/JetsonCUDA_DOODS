@@ -1,17 +1,24 @@
 # JetsonCUDA_DOODS
 
 an RPC that Mimics the DOODS RPC method of getting inference data. This is a Proof of Concept<br>
+Based on this AWESOME project<br>
+https://github.com/snowzach/doods/
+<br>
 
-NOTES: 
+# NOTES: 
 * I am not a C++ developer! this is my first one!
 * mkstmp is used, its insecure as per warnings; but this is a proof of concept
 * Error checking is minimal!
 
+The Code is build on a Jetson Nano with JETPACK installed.
 
 
 Dependencies<br>
+nvidia JetPack<br>
 rapidjson<br>
 pistache<br> 
+
+Download and install accordingly
 
 Port is defaulted to 8080. As the detectNet uses Nvidia command line processing, you can use --NETWORK=xxxxxxxx and run against a downloaded/custom CNN dataset
 
@@ -33,7 +40,7 @@ cd build<br>
 
 
 
-To TEST
+#To TEST
 
 echo "{\"detector_name\":\"default\", \"detect\":{\"*\":60}, \"data\":\"`cat peds_2.png|base64 -w0`\"}" > /tmp/postdata.json && time curl -v -H "Expect:"  -d@/tmp/postdata.json -H "Content-Type: application/json" -X POST http://localhost:8080/detect
 
