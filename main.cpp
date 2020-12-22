@@ -1,3 +1,13 @@
+/*******************************************************
+ * Copyright (C) 2010-2011 {Richard} tuxbox.guru@gmail.com
+ * 
+ * This file is part of cnnserver
+ * 
+ * cnnserver is beerware - Send me a beer if you find these
+ * samples useful 
+ *******************************************************/
+
+
 #include <pistache/net.h>
 #include <pistache/http.h>
 #include <pistache/peer.h>
