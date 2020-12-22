@@ -45,7 +45,7 @@ cd build<br>
 
 # To TEST
 
-`echo "{\"detector_name\":\"default\", \"detect\":{\"*\":60}, \"data\":\"'cat peds_2.png|base64 -w0'\"}" > /tmp/postdata.json && time curl -v -H "Expect:"  -d@/tmp/postdata.json -H "Content-Type: application/json" -X POST http://localhost:8080/detect
+echo "{\"detector_name\":\"default\", \"detect\":{\"*\":60}, \"data\":\"'cat peds_2.png|base64 -w0'\"}" > /tmp/postdata.json && time curl -v -H "Expect:"  -d@/tmp/postdata.json -H "Content-Type: application/json" -X POST http://localhost:8080/detect
 
 *   Trying 192.168.2.58...
 * TCP_NODELAY set
@@ -68,4 +68,4 @@ cd build<br>
 real	0m0.276s<br>
 user	0m0.004s<br>
 sys	0m0.020s<br>
-`
+
