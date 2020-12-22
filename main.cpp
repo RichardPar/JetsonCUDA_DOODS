@@ -138,23 +138,38 @@ struct HelloHandler : public Http::Handler {
 
   if (req.resource() == "/detect") {
       if (req.method() == Http::Method::Post) {
-         
-          //mtx.lock();
           uint64_t start1 = CurrentTime_milliseconds();
           Document document;
 	  StringBuffer s;
           Writer<StringBuffer> jsonwriter(s);
- 
-          
+
           string body = req.body();
           uint64_t end = CurrentTime_milliseconds();
           //cout << "File Uploaded took " << (end - start1) << "mSec" << endl;
 
-
           document.Parse(body.c_str());
-          auto sub = document["detect"].GetObject();
+	  if (document.IsNull())
+          {
+            unlockInstance(ni);
+            return;
+          }
 
+          if (document["detect"].IsNull())
+          {
+            unlockInstance(ni);
+            return;
+          }
+
+
+          auto sub = document["detect"].GetObject();
           uint64_t basedec = CurrentTime_milliseconds();
+
+	  if ( document["data"].IsNull())
+          {
+            unlockInstance(ni);
+            return;
+          }
+
           std::vector<BYTE> decodedData = base64_decode(document["data"].GetString());
           end = CurrentTime_milliseconds();
           //cout << "Base64Decode took " << (end - basedec) << "mSec" << endl;
