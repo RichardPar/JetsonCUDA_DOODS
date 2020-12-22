@@ -64,11 +64,11 @@ echo "{\"detector_name\":\"default\", \"detect\":{\"*\":60}, \"data\":\"`cat ped
 < Content-Length: 362
 < 
 * Closing connection 0
-{"detections":[{"top":0.3072866,"left":0.0308209,"bottom":0.9891333,"right":0.4535146,"label":"motorcycle","confidence":76.629364},{"top":0.2861912,"left":0.7390475,"bottom":0.7178121,"right":0.8755167,"label":"person","confidence":93.0836486},{"top":0.3354573,"left":0.4695544,"bottom":0.5971207,"right":0.6403077,"label":"motorcycle","confidence":88.0180511}]}<br>
+{"detections":[{"top":0.3072866,"left":0.0308209,"bottom":0.9891333,"right":0.4535146,"label":"motorcycle","confidence":76.629364},{"top":0.2861912,"left":0.7390475,"bottom":0.7178121,"right":0.8755167,"label":"person","confidence":93.0836486},{"top":0.3354573,"left":0.4695544,"bottom":0.5971207,"right":0.6403077,"label":"motorcycle","confidence":88.0180511}]}
 
-real	0m0.276s<br>
-user	0m0.004s<br>
-sys	0m0.020s<br>
+real	0m0.276s
+user	0m0.004s
+sys	0m0.020s
 ```
 # Output 
 
