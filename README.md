@@ -45,6 +45,8 @@ cd build<br>
 
 # To TEST
 
+I had an image from the JETPACK sample images peds_2.png   Change the command line to reflect the image of your choosing
+
 ```
 echo "{\"detector_name\":\"default\", \"detect\":{\"*\":60}, \"data\":\"`cat peds_2.png|base64 -w0`\"}" > /tmp/postdata.json && time curl -v -H "Expect:"  -d@/tmp/postdata.json -H "Content-Type: application/json" -X POST http://localhost:8080/detect
 
