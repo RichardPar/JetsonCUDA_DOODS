@@ -16,11 +16,14 @@ The Code is build on a Jetson Nano with JETPACK installed.
 Dependencies<br>
 nvidia JetPack<br>
 rapidjson<br>
+https://github.com/Tencent/rapidjson/<br>
+
 pistache<br> 
+http://pistache.io/quickstart<br>
 
 Download and install accordingly
 
-Port is defaulted to 8080. As the detectNet uses Nvidia command line processing, you can use --NETWORK=xxxxxxxx and run against a downloaded/custom CNN dataset
+Port is defaulted to 8080 and is hardcoded in source... change to what you desire if needed. As the detectNet uses Nvidia command line processing, you can use --NETWORK=xxxxxxxx and run against a downloaded/custom CNN dataset
 
 Valid Commands are -
 GET
