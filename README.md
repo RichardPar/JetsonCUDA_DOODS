@@ -20,6 +20,12 @@ https://github.com/Tencent/rapidjson/<br>
 pistache<br> 
 http://pistache.io/quickstart<br>
 
+Pistache gave me grief... so the CMAKE command line I used was (disabled tests, docs and examples)
+```
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DPISTACHE_BUILD_EXAMPLES=false -DPISTACHE_BUILD_TESTS=false -DPISTACHE_BUILD_DOCS=false    -DPISTACHE_USE_SSL=true ../
+```
+
+
 Download and install accordingly
 
 Port is defaulted to 8080 and is hardcoded in source... change to what you desire if needed. As the detectNet uses Nvidia command line processing, you can use --NETWORK=xxxxxxxx and run against a downloaded/custom CNN dataset
