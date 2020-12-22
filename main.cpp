@@ -33,7 +33,7 @@
 
 
 #define VERSION "0.0Beta"
-#define INSTANCES 1
+#define INSTANCES 3
 
 
 using namespace std;
@@ -262,6 +262,7 @@ int main(int argc, char **argv) {
   auto server = std::make_shared<Http::Endpoint>(addr);
   auto opts = Http::Endpoint::options()
         .maxRequestSize(5*1024*1024)
+        .flags(Tcp::Options::ReuseAddr)
         .threads(10);
 
  server->init(opts);
