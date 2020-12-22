@@ -70,3 +70,127 @@ real	0m0.276s<br>
 user	0m0.004s<br>
 sys	0m0.020s<br>
 ```
+# Output 
+
+```
+./cnnserver 
+
+detectNet -- loading detection network model from:
+          -- model        networks/SSD-Mobilenet-v2/ssd_mobilenet_v2_coco.uff
+          -- input_blob   'Input'
+          -- output_blob  'NMS'
+          -- output_count 'NMS_1'
+          -- class_labels networks/SSD-Mobilenet-v2/ssd_coco_labels.txt
+          -- threshold    0.500000
+          -- batch_size   1
+
+[TRT]    TensorRT version 7.1.3
+[TRT]    loading NVIDIA plugins...
+[TRT]    Registered plugin creator - ::GridAnchor_TRT version 1
+[TRT]    Registered plugin creator - ::NMS_TRT version 1
+[TRT]    Registered plugin creator - ::Reorg_TRT version 1
+[TRT]    Registered plugin creator - ::Region_TRT version 1
+[TRT]    Registered plugin creator - ::Clip_TRT version 1
+[TRT]    Registered plugin creator - ::LReLU_TRT version 1
+[TRT]    Registered plugin creator - ::PriorBox_TRT version 1
+[TRT]    Registered plugin creator - ::Normalize_TRT version 1
+[TRT]    Registered plugin creator - ::RPROI_TRT version 1
+[TRT]    Registered plugin creator - ::BatchedNMS_TRT version 1
+[TRT]    Could not register plugin creator -  ::FlattenConcat_TRT version 1
+[TRT]    Registered plugin creator - ::CropAndResize version 1
+[TRT]    Registered plugin creator - ::DetectionLayer_TRT version 1
+[TRT]    Registered plugin creator - ::Proposal version 1
+[TRT]    Registered plugin creator - ::ProposalLayer_TRT version 1
+[TRT]    Registered plugin creator - ::PyramidROIAlign_TRT version 1
+[TRT]    Registered plugin creator - ::ResizeNearest_TRT version 1
+[TRT]    Registered plugin creator - ::Split version 1
+[TRT]    Registered plugin creator - ::SpecialSlice_TRT version 1
+[TRT]    Registered plugin creator - ::InstanceNormalization_TRT version 1
+[TRT]    detected model format - UFF  (extension '.uff')
+[TRT]    desired precision specified for GPU: FASTEST
+[TRT]    requested fasted precision for device GPU without providing valid calibrator, disabling INT8
+[TRT]    native precisions detected for GPU:  FP32, FP16
+[TRT]    selecting fastest native precision for GPU:  FP16
+[TRT]    attempting to open engine cache file /usr/local/bin/networks/SSD-Mobilenet-v2/ssd_mobilenet_v2_coco.uff.1.1.7103.GPU.FP16.engine
+[TRT]    loading network plan from engine cache... /usr/local/bin/networks/SSD-Mobilenet-v2/ssd_mobilenet_v2_coco.uff.1.1.7103.GPU.FP16.engine
+[TRT]    device GPU, loaded /usr/local/bin/networks/SSD-Mobilenet-v2/ssd_mobilenet_v2_coco.uff
+[TRT]    Deserialize required 3105481 microseconds.
+[TRT]    
+[TRT]    CUDA engine context initialized on device GPU:
+[TRT]       -- layers       116
+[TRT]       -- maxBatchSize 1
+[TRT]       -- workspace    0
+[TRT]       -- deviceMemory 35449856
+[TRT]       -- bindings     3
+[TRT]       binding 0
+                -- index   0
+                -- name    'Input'
+                -- type    FP32
+                -- in/out  INPUT
+                -- # dims  3
+                -- dim #0  3 (SPATIAL)
+                -- dim #1  300 (SPATIAL)
+                -- dim #2  300 (SPATIAL)
+[TRT]       binding 1
+                -- index   1
+                -- name    'NMS'
+                -- type    FP32
+                -- in/out  OUTPUT
+                -- # dims  3
+                -- dim #0  1 (SPATIAL)
+                -- dim #1  100 (SPATIAL)
+                -- dim #2  7 (SPATIAL)
+[TRT]       binding 2
+                -- index   2
+                -- name    'NMS_1'
+                -- type    FP32
+                -- in/out  OUTPUT
+                -- # dims  3
+                -- dim #0  1 (SPATIAL)
+                -- dim #1  1 (SPATIAL)
+                -- dim #2  1 (SPATIAL)
+[TRT]    
+[TRT]    binding to input 0 Input  binding index:  0
+[TRT]    binding to input 0 Input  dims (b=1 c=3 h=300 w=300) size=1080000
+[TRT]    binding to output 0 NMS  binding index:  1
+[TRT]    binding to output 0 NMS  dims (b=1 c=1 h=100 w=7) size=2800
+[TRT]    binding to output 1 NMS_1  binding index:  2
+[TRT]    binding to output 1 NMS_1  dims (b=1 c=1 h=1 w=1) size=4
+[TRT]    
+[TRT]    device GPU, /usr/local/bin/networks/SSD-Mobilenet-v2/ssd_mobilenet_v2_coco.uff initialized.
+[TRT]    W = 7  H = 100  C = 1
+[TRT]    detectNet -- maximum bounding boxes:  100
+[TRT]    detectNet -- loaded 91 class info entries
+[TRT]    detectNet -- number of object classes:  91
+Using Instance 0
+[image] loaded '/tmp/filehLSUCh'  (640x352, 3 channels)
+Completed in 940mSeconds
+Using Instance 0
+[image] loaded '/tmp/fileZRXFZ7'  (640x352, 3 channels)
+Completed in 180mSeconds
+Using Instance 0
+[image] loaded '/tmp/fileXKtgrc'  (640x352, 3 channels)
+Completed in 148mSeconds
+Using Instance 0
+[image] loaded '/tmp/filewdOg3w'  (640x352, 3 channels)
+Completed in 277mSeconds
+Using Instance 0
+[image] loaded '/tmp/fileFW3WLD'  (640x352, 3 channels)
+detected obj 0  class #3 (car)  confidence=0.521959
+detected obj 1  class #3 (car)  confidence=0.626124
+Completed in 146mSeconds
+Using Instance 0
+[image] loaded '/tmp/fileNbyYBO'  (640x352, 3 channels)
+Completed in 149mSeconds
+Using Instance 0
+[image] loaded '/tmp/filepNBrmj'  (640x352, 3 channels)
+Completed in 262mSeconds
+Using Instance 0
+[image] loaded '/tmp/fileBlao9a'  (640x352, 3 channels)
+detected obj 0  class #3 (car)  confidence=0.893681
+detected obj 1  class #3 (car)  confidence=0.500488
+Completed in 158mSeconds
+Using Instance 0
+[image] loaded '/tmp/filevuYIQa'  (640x352, 3 channels)
+Completed in 122mSeconds
+```
