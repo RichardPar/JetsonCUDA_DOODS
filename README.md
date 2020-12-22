@@ -7,8 +7,7 @@ https://github.com/snowzach/doods/
 
 # NOTES: 
 * I am not a C++ developer! this is my first one!
-* mkstmp is used, its insecure as per warnings; but this is a proof of concept
-* Error checking is minimal!
+* Error checking is meh...!
 
 The Code is build on a Jetson Nano with JETPACK installed.
 
