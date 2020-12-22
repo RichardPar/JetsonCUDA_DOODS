@@ -33,13 +33,15 @@
 
 
 #define VERSION "0.0Beta"
+#define INSTANCES 1
+
 
 using namespace std;
 using namespace Pistache;
 using namespace rapidjson;
 
-volatile char busy[3];
-detectNet *net[3];
+volatile char busy[INSTANCES];
+detectNet *net[INSTANCES];
 std::mutex mtx;
 
 inline uint64_t CurrentTime_milliseconds() 
@@ -55,7 +57,7 @@ int lockInstance()
 
   while (1)
   {
-  for (a=0;a<3;a++)
+  for (a=0;a<INSTANCES;a++)
    {
      if (busy[a] == 0)
       {
@@ -243,15 +245,17 @@ struct HelloHandler : public Http::Handler {
 
 int main(int argc, char **argv) {
   commandLine cmdLine(argc, argv);
-  net[0] = detectNet::Create(cmdLine);
-  net[1] = detectNet::Create(cmdLine);
-  net[2] = detectNet::Create(cmdLine);
 
-  if( !net[0] )
+  int a;
+  for (a=0;a<INSTANCES;a++)
+   {
+     net[a] = detectNet::Create(cmdLine);
+     if( !net[a] )
         {
-                cout << "detectnet:  failed to load detectNet model\n" << endl;
-                return 0;
+            cout << "detectnet:  failed to load detectNet model\n" << endl;
+            return 0;
         }
+   }
 
   Port port(8080);
   Address addr(Ipv4::any(), port);
