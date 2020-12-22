@@ -10,8 +10,8 @@ NOTES:
 
 
 Dependencies<br>
-rapidjson
-pistache 
+rapidjson<br>
+pistache<br> 
 
 Port is defaulted to 8080. As the detectNet uses Nvidia command line processing, you can use --NETWORK=xxxxxxxx and run against a downloaded/custom CNN dataset
 
@@ -22,10 +22,20 @@ GET
 POST
   /detect
 
+# To Build
+Git Clone/Unpack....<br>
+cd <where you downloaded><br>
+mkdir build<br>
+cd build<br>
+  cmake ../<br>
+  make<br>
+  
+
+
 
 To TEST
 
-echo "{\"detector_name\":\"default\", \"detect\":{\"*\":60}, \"data\":\"`cat peds_2.png|base64 -w0`\"}" > /tmp/postdata.json && time curl -v -H "Expect:"  -d@/tmp/postdata.json -H "Content-Type: application/json" -X POST http://jetson.local:8080/detect
+echo "{\"detector_name\":\"default\", \"detect\":{\"*\":60}, \"data\":\"`cat peds_2.png|base64 -w0`\"}" > /tmp/postdata.json && time curl -v -H "Expect:"  -d@/tmp/postdata.json -H "Content-Type: application/json" -X POST http://localhost:8080/detect
 
 *   Trying 192.168.2.58...
 * TCP_NODELAY set
@@ -43,8 +53,9 @@ echo "{\"detector_name\":\"default\", \"detect\":{\"*\":60}, \"data\":\"`cat ped
 < Content-Length: 362
 < 
 * Closing connection 0
-{"detections":[{"top":0.3072866,"left":0.0308209,"bottom":0.9891333,"right":0.4535146,"label":"motorcycle","confidence":76.629364},{"top":0.2861912,"left":0.7390475,"bottom":0.7178121,"right":0.8755167,"label":"person","confidence":93.0836486},{"top":0.3354573,"left":0.4695544,"bottom":0.5971207,"right":0.6403077,"label":"motorcycle","confidence":88.0180511}]}
-real	0m0.276s
-user	0m0.004s
-sys	0m0.020s
+{"detections":[{"top":0.3072866,"left":0.0308209,"bottom":0.9891333,"right":0.4535146,"label":"motorcycle","confidence":76.629364},{"top":0.2861912,"left":0.7390475,"bottom":0.7178121,"right":0.8755167,"label":"person","confidence":93.0836486},{"top":0.3354573,"left":0.4695544,"bottom":0.5971207,"right":0.6403077,"label":"motorcycle","confidence":88.0180511}]}<br>
+
+real	0m0.276s<br>
+user	0m0.004s<br>
+sys	0m0.020s<br>
 
