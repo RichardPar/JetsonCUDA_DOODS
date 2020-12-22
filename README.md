@@ -6,6 +6,7 @@ https://github.com/snowzach/doods/
 <br>
 
 # NOTES: 
+* **This does not use DOCKER or anything like that!
 * I am not a C++ developer! this is my first one!
 * Error checking is meh...!
 
