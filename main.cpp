@@ -223,12 +223,19 @@ struct RPCHandler : public Http::Handler {
                      {
                           string v = itr->name.GetString();
                           string y(net[ni]->GetClassDesc(detections[n].ClassID));
-                          if ((v.compare(y)==0) || (v.compare("*")==0))
+                          if ((y.compare(v)==0) || (y.compare("*")==0))
                             {
                              if (!sub[y.c_str()].IsNull())
                              {
-			     int confidence = sub[y.c_str()].GetInt();
-			     if (detections[n].Confidence <= confidence)
+                             int confidence=0;
+			     if (sub[y.c_str()].IsNumber())
+			      {
+			         confidence = sub[y.c_str()].GetInt();
+			       } else
+                               {
+                                cout << "ERROR! CONFIDENCE is not a numeric value - Check JSON packet" << endl;
+			       }
+			      if (detections[n].Confidence <= confidence)
 				{
                                    addNode=1;
                                 }
