@@ -6,9 +6,9 @@ https://github.com/snowzach/doods/
 <br>
 
 # NOTES: 
+* **This does not use DOCKER or anything like that!
 * I am not a C++ developer! this is my first one!
-* mkstmp is used, its insecure as per warnings; but this is a proof of concept
-* Error checking is minimal!
+* Error checking is meh...!
 
 The Code is build on a Jetson Nano with JETPACK installed.
 
@@ -20,6 +20,12 @@ https://github.com/Tencent/rapidjson/<br>
 
 pistache<br> 
 http://pistache.io/quickstart<br>
+
+Pistache gave me grief... so the CMAKE command line I used was (disabled tests, docs and examples)
+```
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DPISTACHE_BUILD_EXAMPLES=false -DPISTACHE_BUILD_TESTS=false -DPISTACHE_BUILD_DOCS=false    -DPISTACHE_USE_SSL=true ../
+```
+
 
 Download and install accordingly
 
@@ -33,12 +39,14 @@ POST
   /detect
 
 # To Build
-Git Clone/Unpack....<br>
-cd <where you downloaded><br>
+Git Clone/Unpack/cmake/build/enjoy....<br>
+
+git clone https://github.com/RichardPar/JetsonCUDA_DOODS.git <br>
+cd JetsonCUDA_DOODS<br>
 mkdir build<br>
 cd build<br>
-  cmake ../<br>
-  make<br>
+cmake ../<br>
+make<br>
   
 
 
