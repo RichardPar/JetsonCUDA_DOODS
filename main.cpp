@@ -159,13 +159,7 @@ struct RPCHandler : public Http::Handler {
           //cout << "File Uploaded took " << (end - start1) << "mSec" << endl;
 
           document.Parse(body.c_str());
-	  if (document.IsNull())
-          {
-            unlockInstance(ni);
-            return;
-          }
-
-          if (document["detect"].IsNull())
+          if (document.HasMember("detect") == 0)
           {
             unlockInstance(ni);
             return;
@@ -173,6 +167,7 @@ struct RPCHandler : public Http::Handler {
 
           auto sub = document["detect"].GetObject();
           uint64_t basedec = CurrentTime_milliseconds();
+
 
 	  if ( document["data"].IsNull())
           {
@@ -292,7 +287,6 @@ struct RPCHandler : public Http::Handler {
         cout << "Completed in " << (end - start1) << "mSeconds" << endl;
       }
    } // End of DETECT
-   // unlockInstance(ni);
   }
 };
 
