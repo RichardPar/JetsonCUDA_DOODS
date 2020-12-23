@@ -40,11 +40,11 @@ POST
 
 # To Build
 Git Clone/Unpack....<br>
-cd <where you downloaded><br>
+cd JetsonCUDA_DOODS<br>
 mkdir build<br>
 cd build<br>
-  cmake ../<br>
-  make<br>
+cmake ../<br>
+make<br>
   
 
 
