@@ -10,6 +10,12 @@ https://github.com/snowzach/doods/
 * I am not a C++ developer! this is my first one!
 * Error checking is meh...!
 
+# UPDATES
+* Fixed Wildcard
+* Added Confidence from JSON message
+* Added some JSON error checking
+
+
 The Code is build on a Jetson Nano with JETPACK installed.
 
 
