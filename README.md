@@ -39,7 +39,9 @@ POST
   /detect
 
 # To Build
-Git Clone/Unpack....<br>
+Git Clone/Unpack/cmake/build/enjoy....<br>
+
+git clone https://github.com/RichardPar/JetsonCUDA_DOODS.git <br>
 cd JetsonCUDA_DOODS<br>
 mkdir build<br>
 cd build<br>
