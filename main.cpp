@@ -44,6 +44,15 @@ volatile char busy[INSTANCES];
 detectNet *net[INSTANCES];
 std::mutex mtx;
 
+
+int usage()
+{
+        printf("usage: cnnserver [--network=NETWORK] [--threshold=THRESHOLD] ...\n");
+
+        return 0;
+}
+
+
 inline uint64_t CurrentTime_milliseconds() 
 {
     return std::chrono::duration_cast<std::chrono::milliseconds>
@@ -213,39 +222,46 @@ struct RPCHandler : public Http::Handler {
         jsonwriter.StartObject();               // Between StartObject()/EndObject(), 
         jsonwriter.Key("detections");                // output a key,
         jsonwriter.StartArray();
+	cout << "Detected " << numDetections << " objects in image" << endl;
         if( numDetections > 0 )
          {
              for( int n=0; n < numDetections; n++ )
                 {
                     int addNode=0;
+                    int confidence=0;
 
                     for (Value::ConstMemberIterator itr = sub.MemberBegin(); itr != sub.MemberEnd(); ++itr)
                      {
-                          string v = itr->name.GetString();
-                          string y(net[ni]->GetClassDesc(detections[n].ClassID));
-                          if ((y.compare(v)==0) || (y.compare("*")==0))
-                            {
-                             if (!sub[y.c_str()].IsNull())
-                             {
-                             int confidence=0;
-			     if (sub[y.c_str()].IsNumber())
-			      {
-			         confidence = sub[y.c_str()].GetInt();
-			       } else
-                               {
-                                cout << "ERROR! CONFIDENCE is not a numeric value - Check JSON packet" << endl;
-			       }
+                          string json_tag  = itr->name.GetString();
+                          string detect_tag(net[ni]->GetClassDesc(detections[n].ClassID));
+			  int wildcard = json_tag.compare("*");
+			  if (wildcard == 0)
+                           {
 
-			      if ((detections[n].Confidence*100) >= confidence)
+			      cout << "Using wildcard for " << detect_tag << endl;
+			      if (sub[json_tag.c_str()].IsNumber())
+                              {
+                                 confidence = sub[json_tag.c_str()].GetInt();
+                                 if (detections[n].Confidence*100 >= confidence)
+				     addNode=1;  // Confidence is good
+                                 break;
+                               } 
+                           } else if (detect_tag.compare(json_tag) == 0)
+                           {
+				if (sub[json_tag.c_str()].IsNumber()) 
+                                {
+				  confidence = sub[json_tag.c_str()].GetInt();
+				} else
 				{
-                                   addNode=1;
-                                }
-                             } else
-			       addNode=1; // there is no confidence mentioned in JSON
-                             break;
-			     }
+                                  confidence=0;
+				}
+				if (detections[n].Confidence*100 >= confidence)
+                                     addNode=1;  // Confidence is good
+                                 break;
+			   }
 
                      }
+
                     if (addNode == 0)
                         continue; // go back to the start!
 
@@ -274,11 +290,9 @@ struct RPCHandler : public Http::Handler {
         unlockInstance(ni);
         end = CurrentTime_milliseconds();
         cout << "Completed in " << (end - start1) << "mSeconds" << endl;
-        //mtx.unlock();
       }
    } // End of DETECT
    // unlockInstance(ni);
-
   }
 };
 
@@ -292,6 +306,7 @@ int main(int argc, char **argv) {
      if( !net[a] )
         {
             cout << "detectnet:  failed to load detectNet model\n" << endl;
+            usage();
             return 0;
         }
    }
