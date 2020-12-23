@@ -235,7 +235,8 @@ struct RPCHandler : public Http::Handler {
                                {
                                 cout << "ERROR! CONFIDENCE is not a numeric value - Check JSON packet" << endl;
 			       }
-			      if (detections[n].Confidence <= confidence)
+
+			      if ((detections[n].Confidence*100) >= confidence)
 				{
                                    addNode=1;
                                 }
