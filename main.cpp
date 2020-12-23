@@ -76,8 +76,8 @@ void unlockInstance(int inst)
    busy[inst] = 0;
 }
 
-struct HelloHandler : public Http::Handler {
-  HTTP_PROTOTYPE(HelloHandler)
+struct RPCHandler : public Http::Handler {
+  HTTP_PROTOTYPE(RPCHandler)
   void onRequest(const Http::Request& req, Http::ResponseWriter writer) override{
   int ni = 0;
 
@@ -140,7 +140,6 @@ struct HelloHandler : public Http::Handler {
       if (req.method() == Http::Method::Post) {
           ni = lockInstance();
 
-
           uint64_t start1 = CurrentTime_milliseconds();
           Document document;
 	  StringBuffer s;
@@ -162,7 +161,6 @@ struct HelloHandler : public Http::Handler {
             unlockInstance(ni);
             return;
           }
-
 
           auto sub = document["detect"].GetObject();
           uint64_t basedec = CurrentTime_milliseconds();
@@ -227,8 +225,18 @@ struct HelloHandler : public Http::Handler {
                           string y(net[ni]->GetClassDesc(detections[n].ClassID));
                           if ((v.compare(y)==0) || (v.compare("*")==0))
                             {
-                              addNode=1;
-                            }
+                             if (!sub[y.c_str()].IsNull())
+                             {
+			     int confidence = sub[y.c_str()].GetInt();
+			     if (detections[n].Confidence <= confidence)
+				{
+                                   addNode=1;
+                                }
+                             } else
+			       addNode=1; // there is no confidence mentioned in JSON
+                             break;
+			     }
+
                      }
                     if (addNode == 0)
                         continue; // go back to the start!
@@ -289,7 +297,7 @@ int main(int argc, char **argv) {
         .threads(10);
 
  server->init(opts);
- server->setHandler(Http::make_handler<HelloHandler>());
+ server->setHandler(Http::make_handler<RPCHandler>());
  server->serve();
 
 
